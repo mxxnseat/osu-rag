@@ -1,12 +1,14 @@
 from functools import lru_cache
 from typing import Annotated
 from fastapi import Depends
-from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic_settings import SettingsConfigDict
 
-class DatabaseSettings(BaseSettings):
-    database_url: str = "postgresql+psycopg://postgres:1234@localhost:5432/osu"
+from app.configs.base import EnvSettings
 
-    model_config = SettingsConfigDict(env_file=".env")
+class DatabaseSettings(EnvSettings):
+    model_config = SettingsConfigDict(env_prefix="DATABASE_")
+    
+    url: str = "postgresql+psycopg://postgres:1234@localhost:5432/osu"
 
 @lru_cache
 def get_settings() -> DatabaseSettings:

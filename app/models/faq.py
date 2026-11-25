@@ -3,8 +3,11 @@ from sqlmodel import Column, SQLModel, Field
 from sqlalchemy.dialects.postgresql import JSONB
 
 class Faq(SQLModel, table=True):
-    id: int | None = Field(default=None, primary_key=True)
-    question: str
-    answer: str
-    embedding: list[float] = Field(sa_column=Column(Vector(384)))
+    __tablename__ = "faqs"
     
+    id: int | None = Field(default=None, primary_key=True)
+    title: str
+    section: str
+    content: str
+    embedding: list[float] = Field(sa_column=Column(Vector(384)))
+    chunk_index: int

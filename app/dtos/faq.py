@@ -1,11 +1,14 @@
 from app.dtos.base import BaseBody, SearchOptions, BaseResponse
 
 class AddFaqBody(BaseBody):
-    question: str
-    answer: str
-
+    content: str
+    title: str
+    section: str
+    path: list[str]
+    chunk_index: int
+    
 class FaqResponse(BaseResponse):
-    answer: str
+    content: str
 
 class SearchBody(SearchOptions):
     question: str

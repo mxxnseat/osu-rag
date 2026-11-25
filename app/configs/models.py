@@ -2,12 +2,16 @@ from functools import lru_cache
 from typing import Annotated
 
 from fastapi import Depends
-from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic_settings import SettingsConfigDict
 
-class ModelsSettings(BaseSettings):
+from app.configs.base import EnvSettings
+
+class ModelsSettings(EnvSettings):
+    model_config = SettingsConfigDict(env_prefix="MODELS_")
+    
     embedding_model: str = ''
+    llm_model: str = ''
 
-    model_config = SettingsConfigDict(env_file=".env")
 
 @lru_cache
 def get_models_settings():

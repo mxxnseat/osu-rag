@@ -11,7 +11,7 @@ def create_cached_engine(db_url: str):
     return create_engine(db_url)
 
 def get_engine(settings: DatabaseSettingsDep) -> Engine:
-    return create_cached_engine(settings.database_url)
+    return create_cached_engine(settings.url)
 
 def get_session(engine: Annotated[Engine, Depends(get_engine)]):
     with Session(engine) as session:
