@@ -1,0 +1,7 @@
+services:
+  pg:
+    image: pgvector/pgvector:pg18-trixie
+    environment:
+      - POSTGRES_PASSWORD=1234
+    ports:
+      - "5432:5432"
