@@ -28,20 +28,14 @@ class FaqRepository(Repository[Faq]):
         embedding_col = cast(Any, Faq.embedding)
         max_distance = 1 - search_payload.min_confidence
         dist = embedding_col.cosine_distance(search_payload.question)
-        min_dist = func.min(dist).label("dist")
 
         stmt = (
             select(
-                Faq.title,
-                func.string_agg(
-                    Faq.content,
-                    aggregate_order_by("\n\n", Faq.chunk_index),
-                ).label("content"),
-                min_dist,
+                Faq.content,
+                dist,
             )
             .where(dist <= max_distance)
-            .group_by(Faq.title)
-            .order_by(min_dist)
+            .order_by(dist, Faq.chunk_index)
             .limit(search_options.limit)
         )
         return self.session.exec(stmt).all()

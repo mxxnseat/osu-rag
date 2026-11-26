@@ -72,10 +72,7 @@ you MUST return: Sumimasen wakaranai.
         return self.llm_processor.decode(generated, skip_special_tokens=True)
 
     def build_user_prompt(self, question: str, chunks: list[str]):
-        context = "\n\n".join(
-            f"[Document {i + 1}]\n{chunk}"
-            for i, chunk in enumerate(chunks)
-        )
+        context = "\n\n".join(chunks)
 
         return f"""
     CONTEXT:

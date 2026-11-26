@@ -10,6 +10,7 @@ class FaqSettings(EnvSettings):
     model_config = SettingsConfigDict(env_prefix="FAQ_")
     
     min_confidence: float = 0.5
+    relevance_count: int = 5
 
 
 @lru_cache

@@ -41,7 +41,7 @@ class FaqService:
     def search(self, payload: FaqSearchPayload):
         results = self.faq_repository.search_document(
             RFaqSearchPayload(question=self.llm_service.encode(payload.question), min_confidence=self.settings.min_confidence),
-            RFaqSearchOptions(limit=1)
+            RFaqSearchOptions(limit=self.settings.relevance_count)
         )
         if isinstance(results, DatabaseError):
             return results
