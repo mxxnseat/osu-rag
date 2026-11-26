@@ -1,7 +1,16 @@
-/models/
-.venv
-.env
+.vscode
 
+# Python
 __pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+
+# Environment
+.env
+.env.*
+
+# ML models
+/models/
 
 trash/

@@ -1,10 +1,11 @@
+from app.exception_handlers.common_handler import common_exception_handler
 from fastapi import FastAPI
 from .routers.faq import router as faq_router
 
-import torch
-import sys
-
 app = FastAPI()
+
+app.exception_handler(Exception)(common_exception_handler)
+
 app.include_router(faq_router)
 
 @app.get("/health/liveness")

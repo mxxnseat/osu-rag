@@ -3,20 +3,29 @@ name = "osu-rag"
 version = "0.1.0"
 requires-python = ">=3.14"
 dependencies = [
+    "accelerate>=1.16.0",
     "alembic>=1.20.1",
     "blake3>=1.0.11",
+    "causal-conv1d>=1.7.0",
     "fastapi-injectable>=1.6.2",
     "fastapi[standard]>=0.165.0",
-    "flash-linear-attention>=0.6.0",
+    "flash-linear-attention[cuda]>=0.6.0",
     "huggingface-hub>=2.4.0",
+    "numpy>=2.5.5",
     "pgvector>=0.5.1",
+    "pillow>=13.0.0",
     "psycopg[binary]>=3.3.9",
     "pydantic-settings>=2.16.3",
     "sentence-transformers>=6.3.0",
     "sqlmodel>=0.0.50",
     "torch>=2.15.0",
-    "triton-windows>=3.9.0.post30",
+    "torchvision>=0.29.2",
     "wenmode>=0.15.3",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2.0",
 ]
 
 [[tool.uv.index]]
@@ -26,3 +35,23 @@ explicit = true
 
 [tool.uv.sources]
 torch = [{ index = "pytorch-cu132" }]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+python_classes = ["Test*"]
+filterwarnings = [
+    "ignore:.*asyncio.get_event_loop_policy:DeprecationWarning",
+]
+addopts = [
+    "-v",
+    "--strict-markers",
+    "--strict-config",
+    "--tb=short",
+]
+
+markers = [
+    "integration: integration tests",
+]

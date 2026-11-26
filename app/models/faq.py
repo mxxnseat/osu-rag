@@ -11,3 +11,4 @@ class Faq(SQLModel, table=True):
     content: str
     embedding: list[float] = Field(sa_column=Column(Vector(384)))
     chunk_index: int
+    hash: str = Field(unique=True)
